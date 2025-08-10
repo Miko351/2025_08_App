@@ -1,0 +1,1 @@
+rootProject.name = "2025_08_App"
