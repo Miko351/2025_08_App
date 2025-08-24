@@ -1,6 +1,7 @@
 package org.example.controller;
 
-import org.example.Motivation;
+import org.example.vo.Motivation;
+import org.example.vo.Rq;
 
 import java.util.*;
 
@@ -93,31 +94,30 @@ public class MotivationController {
     }
 
     public void newdelete(String cmd) {
-        String[] cmdBits = cmd.split("\\?"); // 예) "delete" 와 "id=1"
 
-        String actionMethod = cmdBits[0]; // "delete"
+        Rq rq = new Rq(cmd);
 
-        String[] paramBits = cmdBits[1].split("="); // 예) "id" 와 "1"
+        if (rq.getParams().get("id") == null) {
+            System.out.println("delete?id=값 형식으로 작성하십시오.");
+            return;
+        }
 
-        Map<String, String> params = new HashMap<>();
-        String key = paramBits[0];
-        String value = paramBits[1];
-        params.put(key, value);
+        int id = -1;
 
-        System.out.println("actionMethod: " + actionMethod);
-        System.out.println("paramBits: " + paramBits[0] + paramBits[1]);
-        System.out.println("params: " + params);
-
-        int id = Integer.parseInt(params.get("id"));
+        try {
+            id = Integer.parseInt(rq.getParams().get("id"));
+        } catch (NumberFormatException e) {
+            System.out.println("id=숫자 여야 합니다.");
+            return;
+        }
 
         int foundIndex = -1;
 
         Motivation foundMotivation = null;
-        for (int i = 0; i < motivationList.size(); i++) {
-            foundMotivation = motivationList.get(i);
-            if (foundMotivation.getId() == id) {
-//                System.out.println(foundMotivation.toString());
-                foundIndex = i;
+        for (Motivation m : motivationList) {
+            if (m.getId() == id) {
+                foundMotivation = m;
+                break;
             }
         }
 
