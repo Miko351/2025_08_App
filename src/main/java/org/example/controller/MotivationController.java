@@ -38,9 +38,10 @@ public class MotivationController {
         if (motivationList.size() == 0) {
             System.out.println("등록된 명언이 없습니다.");
         } else {
+            List<Motivation> copy = new ArrayList<>(motivationList);
+            Collections.reverse(copy);
 
-            Collections.reverse(motivationList);
-            for (Motivation m : motivationList) {
+            for (Motivation m : copy) {
                 if (m.getBody().length() < 5) {
                     System.out.println(m.getId() + "               "
                             + m.getBody() + "          "
@@ -54,4 +55,38 @@ public class MotivationController {
         }
     }
 
+    public void delete(String cmd) {
+
+        int id = Integer.parseInt(cmd.split(" ")[1]);
+
+        int foundIndex = -1;
+        Motivation m = null;
+        for (int i = 0; i < motivationList.size(); i++) {
+            m = motivationList.get(i);
+            if (m.getId() == id) {
+//                System.out.println(m.toString());
+                foundIndex = i;
+            }
+        }
+
+        motivationList.remove(foundIndex);
+        System.out.println(id + "번 글이 삭제되었습니다.");
+        
+    }
+
+    public void clear() {
+        try {
+            String os = System.getProperty("os.name").toLowerCase();
+            ProcessBuilder pb;
+            if (os.contains("win")) {
+                pb = new ProcessBuilder("cmd", "/c", "cls");  // CMD·PowerShell
+            } else {
+                pb = new ProcessBuilder("clear");             // Linux·macOS
+            }
+            pb.inheritIO().start().waitFor();
+        } catch (Exception e) {
+            // 실패 시 대체
+            for (int i = 0; i < 100; i++) System.out.println();
+        }
+    }
 }

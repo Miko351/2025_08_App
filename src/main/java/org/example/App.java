@@ -30,6 +30,10 @@ public class App {
                 motivationController.add();
             } else if (cmd.equals("list")) {
                 motivationController.list();
+            } else if (cmd.startsWith("delete")) {
+                motivationController.delete(cmd);
+            } else if (cmd.equals("clear") || cmd.equals("cls")) {
+                motivationController.clear();
             } else {
                 System.out.println("사용할 수 없는 명령어입니다.");
             }
