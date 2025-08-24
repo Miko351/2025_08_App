@@ -14,6 +14,10 @@ public class Rq {
 
         String[] cmdBits = cmd.split("\\?"); // 예) "delete" 와 "id=1"
 
+        if (cmdBits.length < 2) {
+            return;
+        }
+
         actionMethod = cmdBits[0]; // "delete"
 
         String[] paramBits;
@@ -28,10 +32,10 @@ public class Rq {
         String value = paramBits[1];
         params.put(key, value);
 
-        System.out.println("actionMethod: " + actionMethod);
-        System.out.println("paramBits[0]: " + paramBits[0]);
-        System.out.println("paramBits[1]: " + paramBits[1]);
-        System.out.println("params: " + params);
+//        System.out.println("actionMethod: " + actionMethod);
+//        System.out.println("paramBits[0]: " + paramBits[0]);
+//        System.out.println("paramBits[1]: " + paramBits[1]);
+//        System.out.println("params: " + params);
 
     }
 

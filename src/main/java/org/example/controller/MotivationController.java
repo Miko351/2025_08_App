@@ -122,9 +122,50 @@ public class MotivationController {
             return;
         }
 
-        motivationList.remove(foundIndex);
+        motivationList.remove(foundMotivation);
         System.out.println(id + "번 글이 삭제되었습니다.");
 
+    }
+
+    public void update(String cmd) {
+        Rq rq = new Rq(cmd);
+
+        if (rq.getParams().get("id") == null) {
+            System.out.println("update?id=값 형식으로 작성하십시오.");
+            return;
+        }
+
+        int id = -1;
+        try {
+            id = Integer.parseInt(rq.getParams().get("id"));
+        } catch (NumberFormatException e) {
+            System.out.println("id=숫자 여야 합니다.");
+            return;
+        }
+
+        Motivation foundMotivation = null;
+        for (Motivation m : motivationList) {
+            if (m.getId() == id) {
+                foundMotivation = m;
+            }
+        }
+
+        if (foundMotivation == null) {
+            System.out.println(id + "번 글은 없습니다.");
+            return;
+        }
+
+        System.out.println("기존 명언 : " + foundMotivation.getBody());
+        System.out.println("기존 저자 : " + foundMotivation.getAuthor());
+
+        System.out.print("명언 : ");
+        String newbody = Container.getScanner().nextLine().trim();
+        System.out.print("저자 : ");
+        String newauthor = Container.getScanner().nextLine().trim();
+
+        foundMotivation.setBody(newbody);
+        foundMotivation.setAuthor(newauthor);
+        System.out.println(id + "번 글이 수정되었습니다.");
     }
 
     public void clear() {
@@ -142,4 +183,5 @@ public class MotivationController {
             for (int i = 0; i < 100; i++) System.out.println();
         }
     }
+
 }

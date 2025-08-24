@@ -27,6 +27,8 @@ public class App {
             } else if (cmd.startsWith("delete")) {
 //                motivationController.delete(cmd);
                 motivationController.newdelete(cmd);
+            } else if (cmd.startsWith("update")) {
+                motivationController.update(cmd);
             } else if (cmd.equals("clear") || cmd.equals("cls")) {
                 motivationController.clear();
             } else {
