@@ -57,21 +57,42 @@ public class MotivationController {
 
     public void delete(String cmd) {
 
-        int id = Integer.parseInt(cmd.split(" ")[1]);
+        if (cmd.split(" ").length > 2) {
+            System.out.println("delete 뒤에는 숫자 하나만 입력 가능합니다.");
+            return;
+        }
+
+        int id = -1;
+
+        try {
+            id = Integer.parseInt(cmd.split(" ")[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("delete 뒤에는 숫자만 입력 가능합니다.");
+            return;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("사용할 수 없는 명령어입니다.");
+            return;
+        }
 
         int foundIndex = -1;
-        Motivation m = null;
+
+        Motivation foundMotivation = null;
         for (int i = 0; i < motivationList.size(); i++) {
-            m = motivationList.get(i);
-            if (m.getId() == id) {
-//                System.out.println(m.toString());
+            foundMotivation = motivationList.get(i);
+            if (foundMotivation.getId() == id) {
+//                System.out.println(foundMotivation.toString());
                 foundIndex = i;
             }
         }
 
+        if (foundMotivation == null) {
+            System.out.println(id + "번 글은 없습니다.");
+            return;
+        }
+
         motivationList.remove(foundIndex);
         System.out.println(id + "번 글이 삭제되었습니다.");
-        
+
     }
 
     public void clear() {
