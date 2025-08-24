@@ -7,21 +7,15 @@ import java.util.*;
 
 public class App {
 
-    private Scanner sc;
-
-    public App(Scanner sc) {
-        this.sc = sc;
-    }
-
     public void run() {
         SystemController systemController = new SystemController();
-        MotivationController motivationController = new MotivationController(sc);
+        MotivationController motivationController = new MotivationController();
 
         System.out.println("== 명언 앱 ==");
 
         while (true) {
             System.out.print("명령어) ");
-            String cmd = sc.nextLine().trim();
+            String cmd = Container.getScanner().nextLine().trim();
 
             if (cmd.equals("exit")) {
                 systemController.exit();
